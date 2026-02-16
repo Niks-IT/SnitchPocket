@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SnitchPocket — ваш карманный предатель">
+    <meta name="theme-color" content="#1A1D2E">
+    <title>SnitchPocket — Карманный Крыс</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icon-192x192.png">
+    <link href="https://cdn.fontsource.org/fonts?family=Montserrat:wght@400;500;600;700" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #1A1D2E;
+            --primary-darker: #0F111A;
+            --secondary-dark: #2B2B2B;
+            --accent-neon: #39FF14;
+            --accent-red: #8A0303;
+            --text-light: #E0E0E0;
+            --text-gray: #A0A0A0;
+            --glass-bg: rgba(26, 29, 46, 0.85);
+            --glass-border: rgba(57, 255, 20, 0.1);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0F111A 0%, #1A1D2E 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(57, 255, 20, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(138, 3, 3, 0.08) 0%, transparent 25%);
+            z-index: -1;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .rat-logo {
+            width: 80px;
+            height: 80px;
+            background: url('https://image.qwenlm.ai/public_source/de137fe9-8fc6-4553-b819-29d068626b9a/1236773ac-7120-4836-864a-729e89966d22.png') center/contain no-repeat;
+            animation: glitch-pulse 3s infinite;
+        }
+
+        @keyframes glitch-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .app-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-neon), var(--text-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+            letter-spacing: -1px;
+        }
+
+        .app-tagline {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        .status-bar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--glass-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            background: var(--accent-neon);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-neon);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .status-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .rat-character {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+        }
+
+        .rat-character::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(57, 255, 20, 0.05) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .rat-display {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .rat-display:hover {
+            transform: scale(1.05);
+        }
+
+        .rat-face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .rat-head {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid var(--accent-neon);
+        }
+
+        .rat-ear {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-dark);
+            border: 3px solid var(--accent-neon);
+            border-radius: 50%;
+            top: 20px;
+            right: 30px;
+        }
+
+        .earpiece {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: var(--secondary-dark);
+            border: 2px solid var(--accent-neon);
+            border-radius: 50%;
+            top: 30px;
+            right: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .earpiece::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .earpiece-crack {
+            position: absolute;
+            width: 15px;
+            height: 3px;
+            background: var(--accent-red);
+            top: 38px;
+            right: 40px;
+            transform: rotate(45deg);
+        }
+
+        .rat-eye-left {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            top: 70px;
+            left: 50px;
+            border: 2px solid var(--accent-neon);
+        }
+
+        .rat-eye-right {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            top: 70px;
+            right: 50px;
+            border: 2px solid var(--accent-neon);
+            overflow: hidden;
+        }
+
+        .pupil-left {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: look-around 5s infinite;
+        }
+
+        @keyframes look-around {
+            0%, 100% { transform: translate(-50%, -50%); }
+            25% { transform: translate(-60%, -55%); }
+            50% { transform: translate(-40%, -45%); }
+            75% { transform: translate(-55%, -50%); }
+        }
+
+        .pupil-right {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .wink {
+            position: absolute;
+            width: 30px;
+            height: 5px;
+            background: var(--primary-dark);
+            top: 80px;
+            right: 50px;
+            border-radius: 2px;
+            animation: wink 4s infinite;
+        }
+
+        @keyframes wink {
+            0%, 45%, 55%, 100% { transform: scaleX(1); }
+            50% { transform: scaleX(0.1); }
+        }
+
+        .rat-nose {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: twitch 1s infinite alternate;
+        }
+
+        @keyframes twitch {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-45%) scale(1.05); }
+        }
+
+        .rat-mouth {
+            position: absolute;
+            width: 40px;
+            height: 15px;
+            border-bottom: 3px solid var(--accent-neon);
+            border-radius: 0 0 20px 20px;
+            top: 115px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .tail-bubble {
+            position: absolute;
+            bottom: -20px;
+            left: 30px;
+            width: 100px;
+            height: 60px;
+            background: var(--accent-red);
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 85% 100%, 70% 70%, 0 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            animation: bubble-float 3s infinite;
+        }
+
+        @keyframes bubble-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .rat-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--accent-neon);
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+
+        .rat-mood {
+            font-size: 1rem;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .trigger-button {
+            background: linear-gradient(135deg, var(--accent-red), #5a0202);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 0 20px rgba(138, 3, 3, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trigger-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(138, 3, 3, 0.7);
+        }
+
+        .trigger-button:active {
+            transform: translateY(0);
+        }
+
+        .trigger-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent-neon), transparent);
+            transition: left 0.5s;
+        }
+
+        .trigger-button:hover::before {
+            left: 100%;
+        }
+
+        .betrayal-result {
+            margin-top: 30px;
+            min-height: 100px;
+            display: none;
+        }
+
+        .betrayal-bubble {
+            background: var(--secondary-dark);
+            border-left: 4px solid var(--accent-red);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .betrayal-bubble::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-neon);
+            animation: scanline 2s infinite;
+        }
+
+        @keyframes scanline {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        .betrayal-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .betrayal-source {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title::before {
+            content: '⚠️';
+            font-size: 1.2rem;
+        }
+
+        .subscription-tiers {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .tier {
+            background: rgba(26, 29, 46, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 3px solid transparent;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .tier:hover {
+            background: rgba(26, 29, 46, 0.8);
+            transform: translateX(5px);
+        }
+
+        .tier-free {
+            border-left-color: var(--accent-neon);
+        }
+
+        .tier-intriguer {
+            border-left-color: #FF6B6B;
+        }
+
+        .tier-chaos {
+            border-left-color: var(--accent-red);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tier-chaos::after {
+            content: '🔥';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tier-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tier-free .tier-name { color: var(--accent-neon); }
+        .tier-intriguer .tier-name { color: #FF6B6B; }
+        .tier-chaos .tier-name { color: var(--accent-red); }
+
+        .tier-price {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+
+        .tier-features {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-gray);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-neon);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-top: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: rgba(57, 255, 20, 0.1);
+            color: var(--accent-neon);
+            border: 1px solid var(--accent-neon);
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(57, 255, 20, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--primary-dark);
+            border: 2px solid var(--accent-neon);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 50px rgba(57, 255, 20, 0.3);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--accent-neon);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--accent-neon);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--secondary-dark);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-neon);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--accent-neon);
+            color: var(--primary-dark);
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-submit:hover {
+            background: #28df0f;
+            transform: translateY(-2px);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-red);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-top: 40px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .install-btn {
+            background: rgba(57, 255, 20, 0.15);
+            color: var(--accent-neon);
+            border: 1px solid var(--accent-neon);
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .install-btn:hover {
+            background: rgba(57, 255, 20, 0.25);
+        }
+
+        @media (max-width: 767px) {
+            .app-name {
+                font-size: 2rem;
+            }
+            
+            .rat-display {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .rat-character {
+                padding: 30px 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch-text {
+            animation: glitch 0.3s;
+        }
+
+        .pulse-glow {
+            box-shadow: 0 0 20px var(--accent-neon);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo-container">
+                <div class="rat-logo"></div>
+                <div>
+                    <h1 class="app-name">SnitchPocket</h1>
+                    <p class="app-tagline">Ваш карманный предатель</p>
+                </div>
+            </div>
+            <div class="status-bar">
+                <div class="status-indicator"></div>
+                <span class="status-text">Крыс активен</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="rat-character">
+                <div class="rat-display" id="ratDisplay">
+                    <div class="rat-face">
+                        <div class="rat-head">
+                            <div class="rat-ear">
+                                <div class="earpiece"></div>
+                                <div class="earpiece-crack"></div>
+                            </div>
+                            <div class="rat-eye-left">
+                                <div class="pupil-left"></div>
+                            </div>
+                            <div class="rat-eye-right">
+                                <div class="pupil-right"></div>
+                                <div class="wink"></div>
+                            </div>
+                            <div class="rat-nose"></div>
+                            <div class="rat-mouth"></div>
+                        </div>
+                        <div class="tail-bubble">Скоро...</div>
+                    </div>
+                </div>
+                <h2 class="rat-name">Карманный Крыс</h2>
+                <p class="rat-mood">Следит за тобой... и ждёт подходящего момента</p>
+                <button class="trigger-button" id="triggerBetrayal">
+                    Активировать Предательство
+                </button>
+                <div class="betrayal-result" id="betrayalResult">
+                    <div class="betrayal-bubble">
+                        <p class="betrayal-text" id="betrayalText"></p>
+                        <p class="betrayal-source" id="betrayalSource"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card">
+                    <h3 class="card-title">Тарифные Планы</h3>
+                    <div class="subscription-tiers">
+                        <div class="tier tier-free">
+                            <div class="tier-name">Бесплатный</div>
+                            <div class="tier-price">0 ₽ / месяц</div>
+                            <div class="tier-features">
+                                • 3 предательства в день<br>
+                                • Ручное добавление компромата<br>
+                                • Базовые фразы Крыса
+                            </div>
+                        </div>
+                        <div class="tier tier-intriguer">
+                            <div class="tier-name">Интриган</div>
+                            <div class="tier-price">199 ₽ / месяц</div>
+                            <div class="tier-features">
+                                • Неограниченные предательства<br>
+                                • Авто-анализ речи<br>
+                                • Предательство коллег<br>
+                                • Расширенная база фраз
+                            </div>
+                        </div>
+                        <div class="tier tier-chaos">
+                            <div class="tier-name">Хаос</div>
+                            <div class="tier-price">499 ₽ / месяц</div>
+                            <div class="tier-features">
+                                • Генерация ложных компроматов<br>
+                                • Режим социального эксперимента<br>
+                                • Темы голоса (гремлин, бабушка)<br>
+                                • Приоритетная поддержка
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">Статистика</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="betrayalsCount">0</div>
+                            <div class="stat-label">Предательств</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="secretsCount">0</div>
+                            <div class="stat-label">Секретов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="chaosLevel">0%</div>
+                            <div class="stat-label">Уровень Хаоса</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Режим Слежки</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-secondary" id="addSecretBtn">Добавить Секрет</button>
+                        <button class="btn-secondary" id="settingsBtn">Настройки</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>SnitchPocket © 2026 — Ваш цифровой предатель всегда рядом</p>
+            <p>⚠️ Это сатирическое приложение. Не используйте для травли или нарушения приватности.</p>
+            <button class="install-btn" id="installBtn">Установить как приложение</button>
+        </footer>
+    </div>
+
+    <div class="modal" id="secretModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeSecretModal">&times;</button>
+            <h3 class="modal-title">Добавить Секрет</h3>
+            <form id="secretForm">
+                <div class="form-group">
+                    <label class="form-label" for="secretTarget">Кого предать?</label>
+                    <input type="text" class="form-input" id="secretTarget" placeholder="Например: Коллега, Девушка, Босс" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="secretContent">Что ты на самом деле думаешь?</label>
+                    <textarea class="form-input form-textarea" id="secretContent" placeholder="Например: Он назвал тебя козлом в переписке" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="secretContext">Контекст (когда/где)</label>
+                    <input type="text" class="form-input" id="secretContext" placeholder="Например: Вчера в чате с бухгалтерией">
+                </div>
+                <button type="submit" class="btn-submit">Сохранить Секрет</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('SW registered: ', registration);
+                }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
+        }
+
+        // App State
+        const appState = {
+            betrayals: 0,
+            secrets: [],
+            chaosLevel: 0,
+            deferredPrompt: null
+        };
+
+        // DOM Elements
+        const ratDisplay = document.getElementById('ratDisplay');
+        const triggerBetrayal = document.getElementById('triggerBetrayal');
+        const betrayalResult = document.getElementById('betrayalResult');
+        const betrayalText = document.getElementById('betrayalText');
+        const betrayalSource = document.getElementById('betrayalSource');
+        const betrayalsCount = document.getElementById('betrayalsCount');
+        const secretsCount = document.getElementById('secretsCount');
+        const chaosLevel = document.getElementById('chaosLevel');
+        const addSecretBtn = document.getElementById('addSecretBtn');
+        const secretModal = document.getElementById('secretModal');
+        const closeSecretModal = document.getElementById('closeSecretModal');
+        const secretForm = document.getElementById('secretForm');
+        const notification = document.getElementById('notification');
+        const installBtn = document.getElementById('installBtn');
+
+        // Betrayal Messages Database
+        const betrayalMessages = [
+            {
+                text: 'ОН ВРЕТ! 5 МИНУТ НАЗАД ОН ГУГЛИЛ "КАК ОТМАЗАТЬСЯ ОТ ВТОРОГО СВИДАНИЯ"',
+                source: 'Анализ поисковой истории'
+            },
+            {
+                text: 'Он назвал вас козлом в переписке с бухгалтерией',
+                source: 'Утечка из корпоративного чата'
+            },
+            {
+                text: 'Он считает, что ваш пирсинг — ошибка молодости',
+                source: 'Запись разговора в лифте'
+            },
+            {
+                text: 'ВЧЕРА ОН СКАЗАЛ, ЧТО ТЫ СКУЧНАЯ. СЕГОДНЯ ПРИГЛАСИЛ НА СВИДАНИЕ ИЗ ЖАЛОСТИ',
+                source: 'Анализ голосовых сообщений'
+            },
+            {
+                text: 'ЭТОТ "ПОДАРОК" ОН КУПИЛ ЗА 150 РУБЛЕЙ НА АВИТО. ПРОДАВЕЦ — ЕГО ЭКС',
+                source: 'Перехват переписки'
+            },
+            {
+                text: 'ОН СОБИРАЕТСЯ УВОЛИТЬ ТЕБЯ. ЭТО СОБЕСЕДОВАНИЕ — ФОРМАЛЬНОСТЬ',
+                source: 'Прослушка совещания'
+            },
+            {
+                text: 'ТВОЙ КОСТЮМ — КАК У ДВОРНИКА. ОН СКАЗАЛ ЭТО СВОЕМУ ДРУГУ',
+                source: 'Запись в баре'
+            },
+            {
+                text: 'ОНА УЖЕ ВСТРЕЧАЕТСЯ С ДРУГИМ. ТЫ — ЗАПАСНОЙ ВАРИАНТ',
+                source: 'Анализ геолокации'
+            },
+            {
+                text: 'ОН СЧИТАЕТ ТВОЙ ПРОЕКТ ПОЛНЫМ БРЕДОМ. СКАЗАЛ ЭТО ВСЕЙ КОМАНДЕ',
+                source: 'Совещание без тебя'
+            },
+            {
+                text: 'ЭТОТ РЕСТОРАН ОН ВЫБРАЛ ПОТОМУ ЧТО ТАМ СКИДКА 50%. НЕ ИЗ-ЗА ТЕБЯ',
+                source: 'История бронирований'
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAppState();
+            updateStats();
+            
+            // Before install prompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                appState.deferredPrompt = e;
+                installBtn.style.display = 'inline-block';
+            });
+        });
+
+        // Rat Display Click Animation
+        ratDisplay.addEventListener('click', () => {
+            ratDisplay.classList.add('pulse-glow');
+            setTimeout(() => {
+                ratDisplay.classList.remove('pulse-glow');
+            }, 300);
+        });
+
+        // Trigger Betrayal
+        triggerBetrayal.addEventListener('click', () => {
+            performBetrayal();
+        });
+
+        // Add Secret Modal
+        addSecretBtn.addEventListener('click', () => {
+            secretModal.classList.add('active');
+        });
+
+        closeSecretModal.addEventListener('click', () => {
+            secretModal.classList.remove('active');
+        });
+
+        // Secret Form Submit
+        secretForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const target = document.getElementById('secretTarget').value;
+            const content = document.getElementById('secretContent').value;
+            const context = document.getElementById('secretContext').value || 'Не указан';
+
+            const secret = {
+                id: Date.now(),
+                target,
+                content,
+                context,
+                timestamp: new Date().toISOString()
+            };
+
+            appState.secrets.push(secret);
+            saveAppState();
+            updateStats();
+            showNotification('Секрет добавлен! Крыс уже плетёт интриги...');
+            
+            secretForm.reset();
+            secretModal.classList.remove('active');
+        });
+
+        // Install Button
+        installBtn.addEventListener('click', async () => {
+            if (appState.deferredPrompt) {
+                appState.deferredPrompt.prompt();
+                const { outcome } = await appState.deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showNotification('Приложение установлено! Крыс теперь в твоём кармане.');
+                }
+                appState.deferredPrompt = null;
+                installBtn.style.display = 'none';
+            }
+        });
+
+        // Perform Betrayal Logic
+        function performBetrayal() {
+            triggerBetrayal.disabled = true;
+            triggerBetrayal.textContent = 'Крыс думает...';
+
+            // Rat animation
+            ratDisplay.style.animation = 'glitch 0.5s';
+            setTimeout(() => {
+                ratDisplay.style.animation = '';
+            }, 500);
+
+            // Simulate processing delay
+            setTimeout(() => {
+                let message;
+                
+                if (appState.secrets.length > 0 && Math.random() > 0.5) {
+                    // Use custom secret
+                    const randomSecret = appState.secrets[Math.floor(Math.random() * appState.secrets.length)];
+                    message = {
+                        text: randomSecret.content.toUpperCase(),
+                        source: `Секрет от ${randomSecret.target} (${randomSecret.context})`
+                    };
+                } else {
+                    // Use default message
+                    message = betrayalMessages[Math.floor(Math.random() * betrayalMessages.length)];
+                }
+
+                // Display betrayal
+                betrayalText.textContent = message.text;
+                betrayalSource.textContent = message.source;
+                betrayalResult.style.display = 'block';
+                betrayalResult.classList.add('glitch-text');
+
+                // Update stats
+                appState.betrayals++;
+                appState.chaosLevel = Math.min(100, appState.chaosLevel + 5);
+                saveAppState();
+                updateStats();
+
+                // Show notification
+                showNotification('ПРЕДАТЕЛЬСТВО СОВЕРШЕНО! Крыс доволен.');
+
+                // Reset button
+                setTimeout(() => {
+                    triggerBetrayal.disabled = false;
+                    triggerBetrayal.textContent = 'Активировать Предательство';
+                }, 3000);
+
+            }, 1500);
+        }
+
+        // Update Stats Display
+        function updateStats() {
+            betrayalsCount.textContent = appState.betrayals;
+            secretsCount.textContent = appState.secrets.length;
+            chaosLevel.textContent = `${appState.chaosLevel}%`;
+        }
+
+        // Show Notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Save App State to LocalStorage
+        function saveAppState() {
+            localStorage.setItem('snitchpocket_state', JSON.stringify(appState));
+        }
+
+        // Load App State from LocalStorage
+        function loadAppState() {
+            const savedState = localStorage.getItem('snitchpocket_state');
+            if (savedState) {
+                Object.assign(appState, JSON.parse(savedState));
+            }
+        }
+
+        // PWA Manifest
+        const manifest = {
+            "name": "SnitchPocket - Карманный Крыс",
+            "short_name": "SnitchPocket",
+            "description": "Ваш токсичный цифровой питомец, который предаст вас в самый неподходящий момент",
+            "start_url": "/",
+            "display": "standalone",
+            "background_color": "#1A1D2E",
+            "theme_color": "#1A1D2E",
+            "orientation": "portrait",
+            "icons": [
+                {
+                    "src": "/icon-192x192.png",
+                    "sizes": "192x192",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "/icon-512x512.png",
+                    "sizes": "512x512",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                }
+            ]
+        };
+
+        // Service Worker
+        const serviceWorkerCode = `
+            const CACHE_NAME = 'snitchpocket-v1';
+            const urlsToCache = [
+                '/',
+                '/index.html',
+                '/styles.css',
+                '/script.js'
+            ];
+
+            self.addEventListener('install', event => {
+                event.waitUntil(
+                    caches.open(CACHE_NAME)
+                        .then(cache => cache.addAll(urlsToCache))
+                );
+            });
+
+            self.addEventListener('fetch', event => {
+                event.respondWith(
+                    caches.match(event.request)
+                        .then(response => response || fetch(event.request))
+                );
+            });
+        `;
+
+        // Create manifest.json dynamically
+        const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        document.querySelector('link[rel="manifest"]').href = manifestURL;
+
+        // Create service worker dynamically
+        const swBlob = new Blob([serviceWorkerCode], {type: 'application/javascript'});
+        const swURL = URL.createObjectURL(swBlob);
+        // Note: In production, serve sw.js from root directory
+
+        // Easter Egg: Double click rat for chaos mode
+        let clickCount = 0;
+        ratDisplay.addEventListener('dblclick', () => {
+            clickCount++;
+            if (clickCount >= 5) {
+                appState.chaosLevel = 100;
+                saveAppState();
+                updateStats();
+                showNotification('РЕЖИМ ХАОСА АКТИВИРОВАН! ОСТОРОЖНО, КРЫС СТАЛ НЕПРЕДСКАЗУЕМЫМ!');
+                clickCount = 0;
+            }
+        });
+    </script>
+</body>
+</html>
+
