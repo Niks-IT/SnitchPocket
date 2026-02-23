@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
     <meta name="description" content="SnitchPocket — ваш карманный предатель">
     <meta name="theme-color" content="#1A1D2E">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,17 +11,18 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="SnitchPocket">
     <meta name="msapplication-TileColor" content="#1A1D2E">
-    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="msapplication-TileImage" content="/icon-144x144.png">
     <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="apple-touch-fullscreen" content="yes">
     <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39FF14">
-    <title>SnitchPocket — Карманный Крыс</title>
+    <link rel="shortcut icon" href="/favicon.ico">
     <link href="https://cdn.fontsource.org/fonts?family=Montserrat:wght@400;500;600;700" rel="stylesheet">
-    <link href="https://cdn.fontsource.org/fonts?family=Roboto+Mono:wght@400;500" rel="stylesheet">
+    <title>SnitchPocket — Карманный Крыс</title>
     <style>
         :root {
             --primary-dark: #1A1D2E;
@@ -29,7 +30,6 @@
             --secondary-dark: #2B2B2B;
             --accent-neon: #39FF14;
             --accent-red: #8A0303;
-            --accent-pink: #FF10F0;
             --text-light: #E0E0E0;
             --text-gray: #A0A0A0;
             --glass-bg: rgba(26, 29, 46, 0.85);
@@ -37,13 +37,18 @@
             --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.3);
             --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --scanline: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 50%, transparent 50%);
+            --transition-fast: all 0.15s ease;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+            width: 100%;
         }
 
         body {
@@ -53,8 +58,10 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            background-image: var(--scanline);
-            background-size: 100% 4px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         body::before {
@@ -68,18 +75,22 @@
                 radial-gradient(circle at 10% 20%, rgba(57, 255, 20, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(138, 3, 3, 0.08) 0%, transparent 25%);
             z-index: -1;
+            pointer-events: none;
         }
 
         .app-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            flex: 1;
+            width: 100%;
         }
 
         header {
             text-align: center;
-            padding: 30px 0;
+            padding: 20px 0;
             position: relative;
+            margin-bottom: 20px;
         }
 
         .logo-container {
@@ -93,9 +104,9 @@
         .rat-logo {
             width: 80px;
             height: 80px;
-            background: url('https://image.qwenlm.ai/public_source/de137fe9-8fc6-4553-b819-29d068626b9a/1236773ac-7120-4836-864a-729e89966d22.png') center/contain no-repeat;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="%231A1D2E" stroke="%2339FF14" stroke-width="4"/><circle cx="70" cy="80" r="20" fill="white" stroke="%2339FF14" stroke-width="2"/><circle cx="130" cy="80" r="20" fill="white" stroke="%2339FF14" stroke-width="2"/><circle cx="75" cy="85" r="10" fill="%231A1D2E"/><circle cx="135" cy="85" r="10" fill="%231A1D2E"/><rect x="85" y="110" width="30" height="5" rx="2" fill="%2339FF14"/><circle cx="100" cy="100" r="15" fill="none" stroke="%238A0303" stroke-width="2"/><path d="M30 150 Q100 180 170 150" fill="none" stroke="%238A0303" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="30" r="15" fill="%231A1D2E" stroke="%2339FF14" stroke-width="2"/><rect x="110" y="20" width="8" height="8" fill="%238A0303" rx="2"/><line x1="115" y1="28" x2="120" y2="35" stroke="%238A0303" stroke-width="2"/></svg>') center/contain no-repeat;
             animation: glitch-pulse 3s infinite;
-            filter: drop-shadow(0 0 10px var(--accent-neon));
+            filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.5));
         }
 
         @keyframes glitch-pulse {
@@ -112,23 +123,23 @@
             text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
             letter-spacing: -1px;
             position: relative;
+            display: inline-block;
         }
 
         .app-name::after {
             content: '';
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--accent-neon), transparent);
-            opacity: 0.2;
-            animation: scanline-text 2s infinite;
+            height: 4px;
+            background: var(--accent-neon);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
-        @keyframes scanline-text {
-            0% { top: -100%; }
-            100% { top: 100%; }
+        .app-name:hover::after {
+            transform: scaleX(1);
         }
 
         .app-tagline {
@@ -140,8 +151,8 @@
 
         .status-bar {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -151,7 +162,8 @@
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
             box-shadow: var(--shadow-sm);
-            z-index: 100;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
         .status-indicator {
@@ -164,43 +176,38 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--accent-neon); }
+            50% { opacity: 0.3; box-shadow: 0 0 5px var(--accent-neon); }
         }
 
         .status-text {
-            font-size: 0.85rem;
-            font-weight: 500;
+            color: var(--accent-neon);
         }
 
-        .battery-indicator {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.8rem;
-            color: var(--text-gray);
+        .pwa-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, var(--accent-red), #5a0202);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(138, 3, 3, 0.5);
+            animation: badge-float 3s ease-in-out infinite;
         }
 
-        .battery-bar {
-            width: 40px;
-            height: 8px;
-            background: var(--secondary-dark);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .battery-fill {
-            height: 100%;
-            background: var(--accent-neon);
-            width: 75%;
-            transition: width 0.5s;
+        @keyframes badge-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
 
         .main-content {
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         @media (min-width: 768px) {
@@ -245,11 +252,13 @@
             margin: 0 auto 30px;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
             z-index: 1;
         }
 
         .rat-display:hover {
             transform: scale(1.05);
+            filter: drop-shadow(0 0 20px var(--accent-neon));
         }
 
         .rat-face {
@@ -268,7 +277,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             border: 3px solid var(--accent-neon);
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
         }
 
         .rat-ear {
@@ -280,6 +289,7 @@
             border-radius: 50%;
             top: 20px;
             right: 30px;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
         }
 
         .earpiece {
@@ -294,6 +304,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 2;
         }
 
         .earpiece::after {
@@ -305,11 +316,6 @@
             animation: blink 2s infinite;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
         .earpiece-crack {
             position: absolute;
             width: 15px;
@@ -318,6 +324,7 @@
             top: 38px;
             right: 40px;
             transform: rotate(45deg);
+            z-index: 2;
         }
 
         .rat-eye-left {
@@ -329,6 +336,7 @@
             top: 70px;
             left: 50px;
             border: 2px solid var(--accent-neon);
+            overflow: hidden;
         }
 
         .rat-eye-right {
@@ -432,6 +440,7 @@
             font-weight: 600;
             color: white;
             animation: bubble-float 3s infinite;
+            box-shadow: 0 5px 15px rgba(138, 3, 3, 0.5);
         }
 
         @keyframes bubble-float {
@@ -467,6 +476,9 @@
             box-shadow: 0 0 20px rgba(138, 3, 3, 0.5);
             position: relative;
             overflow: hidden;
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
         }
 
         .trigger-button:hover {
@@ -493,10 +505,22 @@
             left: 100%;
         }
 
+        .trigger-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .betrayal-result {
             margin-top: 30px;
             min-height: 100px;
             display: none;
+            animation: slide-down 0.3s ease;
+        }
+
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .betrayal-bubble {
@@ -507,6 +531,7 @@
             margin-top: 15px;
             position: relative;
             overflow: hidden;
+            border: 2px solid var(--glass-border);
         }
 
         .betrayal-bubble::before {
@@ -514,1431 +539,4 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--accent-neon);
-            animation: scanline 2s infinite;
-        }
-
-        @keyframes scanline {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-
-        .betrayal-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            font-weight: 500;
-            font-family: 'Roboto Mono', monospace;
-        }
-
-        .betrayal-source {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            margin-top: 8px;
-            font-style: italic;
-        }
-
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: var(--shadow-sm);
-            backdrop-filter: blur(10px);
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-title::before {
-            content: '⚠️';
-            font-size: 1.2rem;
-        }
-
-        .subscription-tiers {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .tier {
-            background: rgba(26, 29, 46, 0.6);
-            border-radius: 15px;
-            padding: 20px;
-            border-left: 3px solid transparent;
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tier::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .tier:hover::before {
-            opacity: 1;
-        }
-
-        .tier:hover {
-            background: rgba(26, 29, 46, 0.8);
-            transform: translateX(5px);
-        }
-
-        .tier-free {
-            border-left-color: var(--accent-neon);
-        }
-
-        .tier-intriguer {
-            border-left-color: #FF6B6B;
-        }
-
-        .tier-chaos {
-            border-left-color: var(--accent-red);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tier-chaos::after {
-            content: '🔥';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.2rem;
-            animation: rotate 3s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .tier-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .tier-free .tier-name { color: var(--accent-neon); }
-        .tier-intriguer .tier-name { color: #FF6B6B; }
-        .tier-chaos .tier-name { color: var(--accent-red); }
-
-        .tier-price {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            margin-bottom: 10px;
-        }
-
-        .tier-features {
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: var(--text-gray);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-neon);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--text-gray);
-            margin-top: 5px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .btn-secondary {
-            flex: 1;
-            background: rgba(57, 255, 20, 0.1);
-            color: var(--accent-neon);
-            border: 1px solid var(--accent-neon);
-            padding: 10px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(57, 255, 20, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .modal.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background: var(--primary-dark);
-            border: 2px solid var(--accent-neon);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 0 50px rgba(57, 255, 20, 0.3);
-            position: relative;
-            transform: translateY(20px);
-            transition: transform 0.3s;
-        }
-
-        .modal.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--accent-neon);
-            font-size: 1.5rem;
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            transform: rotate(90deg);
-        }
-
-        .modal-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--accent-neon);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            background: var(--secondary-dark);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            color: var(--text-light);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent-neon);
-            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
-        }
-
-        .form-textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: var(--accent-neon);
-            color: var(--primary-dark);
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .btn-submit:hover {
-            background: #28df0f;
-            transform: translateY(-2px);
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--accent-red);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 2000;
-            transform: translateX(400px);
-            transition: transform 0.3s;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-top: 40px;
-            border-top: 1px solid var(--glass-border);
-        }
-
-        .install-btn {
-            background: rgba(57, 255, 20, 0.15);
-            color: var(--accent-neon);
-            border: 1px solid var(--accent-neon);
-            padding: 8px 20px;
-            border-radius: 20px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-block;
-        }
-
-        .install-btn:hover {
-            background: rgba(57, 255, 20, 0.25);
-        }
-
-        @media (max-width: 767px) {
-            .app-name {
-                font-size: 2rem;
-            }
-            
-            .rat-display {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .rat-character {
-                padding: 30px 20px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-
-        .glitch-text {
-            animation: glitch 0.3s;
-        }
-
-        .pulse-glow {
-            box-shadow: 0 0 20px var(--accent-neon);
-        }
-
-        /* Voice visualization */
-        .voice-meter {
-            display: none;
-            margin-top: 20px;
-            height: 8px;
-            background: var(--secondary-dark);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .voice-level {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-red), var(--accent-neon));
-            width: 0%;
-            transition: width 0.1s;
-        }
-
-        /* Loading animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(57, 255, 20, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--accent-neon);
-            animation: spin 1s linear infinite;
-            margin-left: 10px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* App install banner */
-        .install-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--glass-bg);
-            border-top: 2px solid var(--accent-neon);
-            padding: 15px;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .install-banner.show {
-            display: flex;
-        }
-
-        .banner-text {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .banner-btn {
-            background: var(--accent-neon);
-            color: var(--primary-dark);
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* Offline indicator */
-        .offline-indicator {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: var(--accent-red);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            display: none;
-            z-index: 1000;
-        }
-
-        .offline-indicator.show {
-            display: block;
-        }
-
-        /* Secret list styling */
-        .secret-list {
-            margin-top: 15px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .secret-item {
-            background: rgba(26, 29, 46, 0.5);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            border-left: 3px solid var(--accent-red);
-        }
-
-        .secret-target {
-            font-weight: 600;
-            color: var(--accent-neon);
-        }
-
-        .secret-content {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            margin-top: 3px;
-        }
-
-        /* Voice recording button */
-        .voice-btn {
-            background: linear-gradient(135deg, var(--accent-pink), #800878);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .voice-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .voice-btn.recording {
-            background: linear-gradient(135deg, var(--accent-red), #5a0202);
-            animation: pulse 1s infinite;
-        }
-
-        /* Settings modal */
-        .settings-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .setting-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .setting-label {
-            font-size: 0.9rem;
-        }
-
-        .setting-toggle {
-            position: relative;
-            width: 40px;
-            height: 20px;
-            background: var(--secondary-dark);
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        .setting-toggle::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 16px;
-            height: 16px;
-            background: var(--accent-neon);
-            border-radius: 50%;
-            transition: left 0.3s;
-        }
-
-        .setting-toggle.active::before {
-            left: 22px;
-            background: var(--accent-red);
-        }
-    </style>
-</head>
-<body>
-    <div class="offline-indicator" id="offlineIndicator">⚠️ Офлайн режим</div>
-    
-    <div class="app-container">
-        <header>
-            <div class="logo-container">
-                <div class="rat-logo"></div>
-                <div>
-                    <h1 class="app-name">SnitchPocket</h1>
-                    <p class="app-tagline">Ваш карманный предатель</p>
-                </div>
-            </div>
-            <div class="status-bar">
-                <div class="status-indicator"></div>
-                <span class="status-text">Крыс активен</span>
-                <div class="battery-indicator">
-                    <span>🔋</span>
-                    <div class="battery-bar">
-                        <div class="battery-fill" id="batteryFill"></div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="main-content">
-            <div class="rat-character">
-                <div class="rat-display" id="ratDisplay">
-                    <div class="rat-face">
-                        <div class="rat-head">
-                            <div class="rat-ear">
-                                <div class="earpiece"></div>
-                                <div class="earpiece-crack"></div>
-                            </div>
-                            <div class="rat-eye-left">
-                                <div class="pupil-left"></div>
-                            </div>
-                            <div class="rat-eye-right">
-                                <div class="pupil-right"></div>
-                                <div class="wink"></div>
-                            </div>
-                            <div class="rat-nose"></div>
-                            <div class="rat-mouth"></div>
-                        </div>
-                        <div class="tail-bubble">Скоро...</div>
-                    </div>
-                </div>
-                <h2 class="rat-name">Карманный Крыс</h2>
-                <p class="rat-mood" id="ratMood">Следит за тобой... и ждёт подходящего момента</p>
-                <button class="trigger-button" id="triggerBetrayal">
-                    Активировать Предательство
-                </button>
-                <div class="voice-meter" id="voiceMeter">
-                    <div class="voice-level" id="voiceLevel"></div>
-                </div>
-                <div class="betrayal-result" id="betrayalResult">
-                    <div class="betrayal-bubble">
-                        <p class="betrayal-text" id="betrayalText"></p>
-                        <p class="betrayal-source" id="betrayalSource"></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sidebar">
-                <div class="card">
-                    <h3 class="card-title">Тарифные Планы</h3>
-                    <div class="subscription-tiers">
-                        <div class="tier tier-free" data-tier="free">
-                            <div class="tier-name">Бесплатный</div>
-                            <div class="tier-price">0 ₽ / месяц</div>
-                            <div class="tier-features">
-                                • 3 предательства в день<br>
-                                • Ручное добавление компромата<br>
-                                • Базовые фразы Крыса
-                            </div>
-                        </div>
-                        <div class="tier tier-intriguer" data-tier="intriguer">
-                            <div class="tier-name">Интриган</div>
-                            <div class="tier-price">199 ₽ / месяц</div>
-                            <div class="tier-features">
-                                • Неограниченные предательства<br>
-                                • Авто-анализ речи<br>
-                                • Предательство коллег<br>
-                                • Расширенная база фраз
-                            </div>
-                        </div>
-                        <div class="tier tier-chaos" data-tier="chaos">
-                            <div class="tier-name">Хаос</div>
-                            <div class="tier-price">499 ₽ / месяц</div>
-                            <div class="tier-features">
-                                • Генерация ложных компроматов<br>
-                                • Режим социального эксперимента<br>
-                                • Темы голоса (гремлин, бабушка)<br>
-                                • Приоритетная поддержка
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title">Статистика</h3>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value" id="betrayalsCount">0</div>
-                            <div class="stat-label">Предательств</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="secretsCount">0</div>
-                            <div class="stat-label">Секретов</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="chaosLevel">0%</div>
-                            <div class="stat-label">Уровень Хаоса</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="activeTime">00:00</div>
-                            <div class="stat-label">Активен</div>
-                        </div>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn-secondary" id="addSecretBtn">Добавить Секрет</button>
-                        <button class="btn-secondary" id="settingsBtn">Настройки</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3 class="card-title">Последние Секреты</h3>
-                    <div class="secret-list" id="secretList">
-                        <p style="color: var(--text-gray); text-align: center;">Секреты отсутствуют</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <p>SnitchPocket © 2026 — Ваш цифровой предатель всегда рядом</p>
-            <p>⚠️ Это сатирическое приложение. Не используйте для травли или нарушения приватности.</p>
-            <button class="install-btn" id="installBtn">Установить как приложение</button>
-        </footer>
-    </div>
-
-    <div class="install-banner" id="installBanner">
-        <span class="banner-text">Хотите установить приложение?</span>
-        <button class="banner-btn" id="bannerInstallBtn">Установить</button>
-    </div>
-
-    <div class="modal" id="secretModal">
-        <div class="modal-content">
-            <button class="modal-close" id="closeSecretModal">&times;</button>
-            <h3 class="modal-title">Добавить Секрет</h3>
-            <form id="secretForm">
-                <div class="form-group">
-                    <label class="form-label" for="secretTarget">Кого предать?</label>
-                    <input type="text" class="form-input" id="secretTarget" placeholder="Например: Коллега, Девушка, Босс" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="secretContent">Что ты на самом деле думаешь?</label>
-                    <textarea class="form-input form-textarea" id="secretContent" placeholder="Например: Он назвал тебя козлом в переписке" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="secretContext">Контекст (когда/где)</label>
-                    <input type="text" class="form-input" id="secretContext" placeholder="Например: Вчера в чате с бухгалтерией">
-                </div>
-                <button type="submit" class="btn-submit">Сохранить Секрет</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal" id="settingsModal">
-        <div class="modal-content">
-            <button class="modal-close" id="closeSettingsModal">&times;</button>
-            <h3 class="modal-title">Настройки</h3>
-            <div class="settings-grid">
-                <div class="setting-item">
-                    <span class="setting-label">Звуковые эффекты</span>
-                    <div class="setting-toggle active" id="soundToggle"></div>
-                </div>
-                <div class="setting-item">
-                    <span class="setting-label">Вибрация</span>
-                    <div class="setting-toggle active" id="vibrationToggle"></div>
-                </div>
-                <div class="setting-item">
-                    <span class="setting-label">Уведомления</span>
-                    <div class="setting-toggle" id="notificationToggle"></div>
-                </div>
-                <div class="setting-item">
-                    <span class="setting-label">Офлайн режим</span>
-                    <div class="setting-toggle active" id="offlineToggle"></div>
-                </div>
-            </div>
-            <div style="margin-top: 20px;">
-                <button class="btn-secondary" style="width: 100%;" id="clearDataBtn">Очистить все данные</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="notification" id="notification"></div>
-
-    <script>
-        // PWA Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(registration => {
-                    console.log('SW registered: ', registration);
-                }).catch(registrationError => {
-                    console.log('SW registration failed: ', registrationError);
-                });
-            });
-        }
-
-        // App State
-        const appState = {
-            betrayals: 0,
-            secrets: [],
-            chaosLevel: 0,
-            activeTime: 0,
-            currentTier: 'free',
-            settings: {
-                sound: true,
-                vibration: true,
-                notifications: false,
-                offlineMode: true
-            },
-            deferredPrompt: null,
-            isOffline: !navigator.onLine,
-            batteryLevel: 75
-        };
-
-        // DOM Elements
-        const ratDisplay = document.getElementById('ratDisplay');
-        const triggerBetrayal = document.getElementById('triggerBetrayal');
-        const betrayalResult = document.getElementById('betrayalResult');
-        const betrayalText = document.getElementById('betrayalText');
-        const betrayalSource = document.getElementById('betrayalSource');
-        const betrayalsCount = document.getElementById('betrayalsCount');
-        const secretsCount = document.getElementById('secretsCount');
-        const chaosLevel = document.getElementById('chaosLevel');
-        const activeTime = document.getElementById('activeTime');
-        const ratMood = document.getElementById('ratMood');
-        const addSecretBtn = document.getElementById('addSecretBtn');
-        const secretModal = document.getElementById('secretModal');
-        const closeSecretModal = document.getElementById('closeSecretModal');
-        const secretForm = document.getElementById('secretForm');
-        const notification = document.getElementById('notification');
-        const installBtn = document.getElementById('installBtn');
-        const bannerInstallBtn = document.getElementById('bannerInstallBtn');
-        const installBanner = document.getElementById('installBanner');
-        const offlineIndicator = document.getElementById('offlineIndicator');
-        const secretList = document.getElementById('secretList');
-        const settingsBtn = document.getElementById('settingsBtn');
-        const settingsModal = document.getElementById('settingsModal');
-        const closeSettingsModal = document.getElementById('closeSettingsModal');
-        const soundToggle = document.getElementById('soundToggle');
-        const vibrationToggle = document.getElementById('vibrationToggle');
-        const notificationToggle = document.getElementById('notificationToggle');
-        const offlineToggle = document.getElementById('offlineToggle');
-        const clearDataBtn = document.getElementById('clearDataBtn');
-        const voiceMeter = document.getElementById('voiceMeter');
-        const voiceLevel = document.getElementById('voiceLevel');
-        const batteryFill = document.getElementById('batteryFill');
-
-        // Betrayal Messages Database
-        const betrayalMessages = [
-            {
-                text: 'ОН ВРЕТ! 5 МИНУТ НАЗАД ОН ГУГЛИЛ "КАК ОТМАЗАТЬСЯ ОТ ВТОРОГО СВИДАНИЯ"',
-                source: 'Анализ поисковой истории',
-                mood: 'Злой'
-            },
-            {
-                text: 'Он назвал вас козлом в переписке с бухгалтерией',
-                source: 'Утечка из корпоративного чата',
-                mood: 'Саркастичный'
-            },
-            {
-                text: 'Он считает, что ваш пирсинг — ошибка молодости',
-                source: 'Запись разговора в лифте',
-                mood: 'Циничный'
-            },
-            {
-                text: 'ВЧЕРА ОН СКАЗАЛ, ЧТО ТЫ СКУЧНАЯ. СЕГОДНЯ ПРИГЛАСИЛ НА СВИДАНИЕ ИЗ ЖАЛОСТИ',
-                source: 'Анализ голосовых сообщений',
-                mood: 'Жестокий'
-            },
-            {
-                text: 'ЭТОТ "ПОДАРОК" ОН КУПИЛ ЗА 150 РУБЛЕЙ НА АВИТО. ПРОДАВЕЦ — ЕГО ЭКС',
-                source: 'Перехват переписки',
-                mood: 'Мстительный'
-            },
-            {
-                text: 'ОН СОБИРАЕТСЯ УВОЛИТЬ ТЕБЯ. ЭТО СОБЕСЕДОВАНИЕ — ФОРМАЛЬНОСТЬ',
-                source: 'Прослушка совещания',
-                mood: 'Предательский'
-            },
-            {
-                text: 'ТВОЙ КОСТЮМ — КАК У ДВОРНИКА. ОН СКАЗАЛ ЭТО СВОЕМУ ДРУГУ',
-                source: 'Запись в баре',
-                mood: 'Снисходительный'
-            },
-            {
-                text: 'ОНА УЖЕ ВСТРЕЧАЕТСЯ С ДРУГИМ. ТЫ — ЗАПАСНОЙ ВАРИАНТ',
-                source: 'Анализ геолокации',
-                mood: 'Безжалостный'
-            },
-            {
-                text: 'ОН СЧИТАЕТ ТВОЙ ПРОЕКТ ПОЛНЫМ БРЕДОМ. СКАЗАЛ ЭТО ВСЕЙ КОМАНДЕ',
-                source: 'Совещание без тебя',
-                mood: 'Критичный'
-            },
-            {
-                text: 'ЭТОТ РЕСТОРАН ОН ВЫБРАЛ ПОТОМУ ЧТО ТАМ СКИДКА 50%. НЕ ИЗ-ЗА ТЕБЯ',
-                source: 'История бронирований',
-                mood: 'Разочарованный'
-            },
-            {
-                text: 'ОН НАЗВАЛ ТЕБЯ "САМЫМ СКУЧНЫМ ЧЕЛОВЕКОМ В МИРЕ" В СВОЕМ ДНЕВНИКЕ',
-                source: 'Взлом облачного хранилища',
-                mood: 'Честный'
-            },
-            {
-                text: 'ТЫ ПОЛУЧИЛ ЭТУ РАБОТУ ТОЛЬКО ПОТОМУ ЧТО ТВОЙ ОТЕЦ ЗНАКОМ С ДИРЕКТОРОМ',
-                source: 'Разговор в курилке',
-                mood: 'Разоблачающий'
-            },
-            {
-                text: 'ОН ГОВОРИТ, ЧТО ЛЮБИТ ТВОЮ ГОТОВКУ, НО ВЫБРАСЫВАЕТ ВСЁ В МУСОР',
-                source: 'Камера на кухне',
-                mood: 'Практичный'
-            },
-            {
-                text: 'ТВОЯ ПРЕЗЕНТАЦИЯ БЫЛА УЖАСНОЙ. ВСЕ СМЕЯЛИСЬ НАД ТОБОЙ ПОСЛЕ',
-                source: 'Слухи в офисе',
-                mood: 'Правдивый'
-            },
-            {
-                text: 'ОН ПЛАНИРУЕТ ПЕРЕЕХАТЬ В ДРУГОЙ ГОРОД И НЕ СОБИРАЕТСЯ БРАТЬ ТЕБЯ',
-                source: 'Поисковые запросы',
-                mood: 'Беспощадный'
-            }
-        ];
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadAppState();
-            updateStats();
-            updateSecretList();
-            startActiveTimer();
-            updateBatteryLevel();
-            
-            // Before install prompt
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                appState.deferredPrompt = e;
-                installBtn.style.display = 'inline-block';
-                installBanner.classList.add('show');
-            });
-
-            // Online/offline detection
-            window.addEventListener('online', () => {
-                appState.isOffline = false;
-                offlineIndicator.classList.remove('show');
-                showNotification('Подключение восстановлено!');
-            });
-
-            window.addEventListener('offline', () => {
-                appState.isOffline = true;
-                offlineIndicator.classList.add('show');
-                showNotification('Офлайн режим активирован');
-            });
-
-            // Check initial connection
-            if (appState.isOffline) {
-                offlineIndicator.classList.add('show');
-            }
-
-            // Battery API (if available)
-            if ('getBattery' in navigator) {
-                navigator.getBattery().then(battery => {
-                    updateBatteryDisplay(battery.level * 100);
-                    battery.addEventListener('levelchange', () => {
-                        updateBatteryDisplay(battery.level * 100);
-                    });
-                });
-            }
-        });
-
-        // Rat Display Click Animation
-        ratDisplay.addEventListener('click', () => {
-            ratDisplay.classList.add('pulse-glow');
-            setTimeout(() => {
-                ratDisplay.classList.remove('pulse-glow');
-            }, 300);
-            
-            // Easter egg: 5 clicks unlocks chaos mode
-            if (!appState.easterEggCount) {
-                appState.easterEggCount = 0;
-            }
-            appState.easterEggCount++;
-            
-            if (appState.easterEggCount >= 5) {
-                appState.chaosLevel = 100;
-                saveAppState();
-                updateStats();
-                showNotification('РЕЖИМ ХАОСА АКТИВИРОВАН! ОСТОРОЖНО, КРЫС СТАЛ НЕПРЕДСКАЗУЕМЫМ!');
-                appState.easterEggCount = 0;
-            }
-        });
-
-        // Trigger Betrayal
-        triggerBetrayal.addEventListener('click', () => {
-            performBetrayal();
-        });
-
-        // Add Secret Modal
-        addSecretBtn.addEventListener('click', () => {
-            secretModal.classList.add('active');
-        });
-
-        closeSecretModal.addEventListener('click', () => {
-            secretModal.classList.remove('active');
-        });
-
-        // Settings Modal
-        settingsBtn.addEventListener('click', () => {
-            settingsModal.classList.add('active');
-            // Update toggles
-            soundToggle.classList.toggle('active', appState.settings.sound);
-            vibrationToggle.classList.toggle('active', appState.settings.vibration);
-            notificationToggle.classList.toggle('active', appState.settings.notifications);
-            offlineToggle.classList.toggle('active', appState.settings.offlineMode);
-        });
-
-        closeSettingsModal.addEventListener('click', () => {
-            settingsModal.classList.remove('active');
-        });
-
-        // Toggle settings
-        soundToggle.addEventListener('click', () => {
-            appState.settings.sound = !appState.settings.sound;
-            soundToggle.classList.toggle('active');
-            saveAppState();
-        });
-
-        vibrationToggle.addEventListener('click', () => {
-            appState.settings.vibration = !appState.settings.vibration;
-            vibrationToggle.classList.toggle('active');
-            saveAppState();
-        });
-
-        notificationToggle.addEventListener('click', () => {
-            appState.settings.notifications = !appState.settings.notifications;
-            notificationToggle.classList.toggle('active');
-            saveAppState();
-        });
-
-        offlineToggle.addEventListener('click', () => {
-            appState.settings.offlineMode = !appState.settings.offlineMode;
-            offlineToggle.classList.toggle('active');
-            saveAppState();
-        });
-
-        // Clear data
-        clearDataBtn.addEventListener('click', () => {
-            if (confirm('Вы уверены? Все секреты и статистика будут удалены!')) {
-                appState.secrets = [];
-                appState.betrayals = 0;
-                appState.chaosLevel = 0;
-                saveAppState();
-                updateStats();
-                updateSecretList();
-                showNotification('Данные очищены!');
-                settingsModal.classList.remove('active');
-            }
-        });
-
-        // Secret Form Submit
-        secretForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const target = document.getElementById('secretTarget').value;
-            const content = document.getElementById('secretContent').value;
-            const context = document.getElementById('secretContext').value || 'Не указан';
-
-            const secret = {
-                id: Date.now(),
-                target,
-                content,
-                context,
-                timestamp: new Date().toISOString()
-            };
-
-            appState.secrets.push(secret);
-            saveAppState();
-            updateStats();
-            updateSecretList();
-            showNotification('Секрет добавлен! Крыс уже плетёт интриги...');
-            
-            secretForm.reset();
-            secretModal.classList.remove('active');
-        });
-
-        // Install Buttons
-        installBtn.addEventListener('click', async () => {
-            if (appState.deferredPrompt) {
-                appState.deferredPrompt.prompt();
-                const { outcome } = await appState.deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    showNotification('Приложение установлено! Крыс теперь в твоём кармане.');
-                }
-                appState.deferredPrompt = null;
-                installBtn.style.display = 'none';
-                installBanner.classList.remove('show');
-            }
-        });
-
-        bannerInstallBtn.addEventListener('click', () => {
-            installBtn.click();
-        });
-
-        // Perform Betrayal Logic
-        function performBetrayal() {
-            if (triggerBetrayal.disabled) return;
-
-            triggerBetrayal.disabled = true;
-            triggerBetrayal.innerHTML = 'Крыс думает...';
-            
-            // Show voice meter simulation
-            voiceMeter.style.display = 'block';
-            simulateVoiceMeter();
-
-            // Rat animation
-            ratDisplay.style.animation = 'glitch 0.5s';
-            setTimeout(() => {
-                ratDisplay.style.animation = '';
-            }, 500);
-
-            // Play sound if enabled
-            if (appState.settings.sound) {
-                playBetrayalSound();
-            }
-
-            // Vibrate if enabled
-            if (appState.settings.vibration && 'vibrate' in navigator) {
-                navigator.vibrate([100, 50, 100]);
-            }
-
-            // Simulate processing delay
-            setTimeout(() => {
-                let message;
-                
-                // Higher chance to use custom secrets if chaos level is high
-                const useCustomSecret = appState.secrets.length > 0 && (Math.random() > 0.3 || appState.chaosLevel > 50);
-                
-                if (useCustomSecret) {
-                    // Use custom secret
-                    const randomSecret = appState.secrets[Math.floor(Math.random() * appState.secrets.length)];
-                    message = {
-                        text: randomSecret.content.toUpperCase(),
-                        source: `Секрет от ${randomSecret.target} (${randomSecret.context})`,
-                        mood: getRandomMood()
-                    };
-                } else {
-                    // Use default message
-                    message = betrayalMessages[Math.floor(Math.random() * betrayalMessages.length)];
-                }
-
-                // Display betrayal
-                betrayalText.textContent = message.text;
-                betrayalSource.textContent = message.source;
-                betrayalResult.style.display = 'block';
-                betrayalResult.classList.add('glitch-text');
-                
-                // Update rat mood
-                ratMood.textContent = `Настроение: ${message.mood}`;
-                
-                // Update stats
-                appState.betrayals++;
-                appState.chaosLevel = Math.min(100, appState.chaosLevel + Math.random() * 10);
-                saveAppState();
-                updateStats();
-
-                // Show notification
-                showNotification('ПРЕДАТЕЛЬСТВО СОВЕРШЕНО! Крыс доволен.');
-
-                // Reset button after delay
-                setTimeout(() => {
-                    triggerBetrayal.disabled = false;
-                    triggerBetrayal.textContent = 'Активировать Предательство';
-                    voiceMeter.style.display = 'none';
-                }, 3000);
-
-            }, 1500);
-        }
-
-        // Simulate voice meter
-        function simulateVoiceMeter() {
-            const interval = setInterval(() => {
-                const level = Math.random() * 100;
-                voiceLevel.style.width = `${level}%`;
-            }, 100);
-            
-            setTimeout(() => {
-                clearInterval(interval);
-                voiceLevel.style.width = '0%';
-            }, 1500);
-        }
-
-        // Update Stats Display
-        function updateStats() {
-            betrayalsCount.textContent = appState.betrayals;
-            secretsCount.textContent = appState.secrets.length;
-            chaosLevel.textContent = `${Math.round(appState.chaosLevel)}%`;
-        }
-
-        // Update Secret List
-        function updateSecretList() {
-            if (appState.secrets.length === 0) {
-                secretList.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Секреты отсутствуют</p>';
-                return;
-            }
-            
-            // Show only last 5 secrets
-            const recentSecrets = appState.secrets.slice(-5).reverse();
-            secretList.innerHTML = recentSecrets.map(secret => `
-                <div class="secret-item">
-                    <div class="secret-target">${secret.target}</div>
-                    <div class="secret-content">${secret.content}</div>
-                </div>
-            `).join('');
-        }
-
-        // Show Notification
-        function showNotification(message) {
-            notification.textContent = message;
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Play betrayal sound
-        function playBetrayalSound() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.type = 'square';
-            oscillator.frequency.value = 440;
-            gainNode.gain.value = 0.1;
-            
-            oscillator.start();
-            setTimeout(() => {
-                oscillator.frequency.value = 880;
-                setTimeout(() => {
-                    oscillator.stop();
-                }, 100);
-            }, 100);
-        }
-
-        // Get random mood
-        function getRandomMood() {
-            const moods = ['Злой', 'Саркастичный', 'Циничный', 'Жестокий', 'Мстительный', 'Предательский'];
-            return moods[Math.floor(Math.random() * moods.length)];
-        }
-
-        // Start active timer
-        function startActiveTimer() {
-            let seconds = 0;
-            setInterval(() => {
-                seconds++;
-                const minutes = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                activeTime.textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            }, 1000);
-        }
-
-        // Update battery display
-        function updateBatteryDisplay(level) {
-            appState.batteryLevel = level;
-            batteryFill.style.width = `${level}%`;
-        }
-
-        // Simulate battery drain
-        function updateBatteryLevel() {
-            setInterval(() => {
-                if (appState.batteryLevel > 10) {
-                    appState.batteryLevel -= 0.1;
-                    batteryFill.style.width = `${appState.batteryLevel}%`;
-                }
-            }, 60000); // Drain 1% per minute
-        }
-
-        // Save App State to LocalStorage
-        function saveAppState() {
-            localStorage.setItem('snitchpocket_state', JSON.stringify(appState));
-        }
-
-        // Load App State from LocalStorage
-        function loadAppState() {
-            const savedState = localStorage.getItem('snitchpocket_state');
-            if (savedState) {
-                const parsedState = JSON.parse(savedState);
-                Object.assign(appState, parsedState);
-                
-                // Restore settings with defaults
-                appState.settings = {
-                    sound: parsedState.settings?.sound ?? true,
-                    vibration: parsedState.settings?.vibration ?? true,
-                    notifications: parsedState.settings?.notifications ?? false,
-                    offlineMode: parsedState.settings?.offlineMode ?? true
-                };
-            }
-        }
-
-        // PWA Manifest
-        const manifest = {
-            "name": "SnitchPocket - Карманный Крыс",
-            "short_name": "SnitchPocket",
-            "description": "Ваш токсичный цифровой питомец, который предаст вас в самый неподходящий момент",
-            "start_url": "/",
-            "display": "standalone",
-            "background_color": "#1A1D2E",
-            "theme_color": "#1A1D2E",
-            "orientation": "portrait",
-            "categories": ["entertainment", "social", "utilities"],
-            "screenshots": [
-                {
-                    "src": "/screenshot1.png",
-                    "sizes": "1280x720",
-                    "type": "image/png",
-                    "platform": "wide"
-                }
-            ],
-            "icons": [
-                {
-                    "src": "/icon-192x192.png",
-                    "sizes": "192x192",
-                    "type": "image/png",
-                    "purpose": "any maskable"
-                },
-                {
-                    "src": "/icon-512x512.png",
-                    "sizes": "512x512",
-                    "type": "image/png",
-                    "purpose": "any maskable"
-                },
-                {
-                    "src": "/apple-touch-icon.png",
-                    "sizes": "180x180",
-                    "type": "image/png",
-                    "purpose": "any"
-                }
-            ],
-            "shortcuts": [
-                {
-                    "name": "Активировать Предательство",
-                    "short_name": "Предать",
-                    "description": "Запустить Крыса на предательство",
-                    "url": "/?action=betrayal",
-                    "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
-                },
-                {
-                    "name": "Добавить Секрет",
-                    "short_name": "Секрет",
-                    "description": "Добавить новый секрет для Крыса",
-                    "url": "/?action=add-secret",
-                    "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
-                }
-            ]
-        };
-
-        // Service Worker for offline support
-        const serviceWorkerCode = `
-            const CACHE_NAME = 'snitchpocket-v1';
-            const urlsToCache = [
-                '/',
-                '/index.html',
-                '/styles.css',
-                '/script.js',
-                '/icon-192x192.png',
-                '/icon-512x512.png'
-            ];
-
-            self.addEventListener('install', event => {
-                event.waitUntil(
-                    caches.open(CACHE_NAME)
-                        .then(cache => {
-                            console.log('Opened cache');
-                            return cache.addAll(urlsToCache);
-                        })
-                );
-                self.skipWaiting();
-            });
-
-            self.addEventListener('activate', event => {
-                event.waitUntil(
-                    caches.keys().then(cacheNames => {
-                        return Promise.all(
-                            cacheNames.map(cacheName => {
-                                if (cacheName !== CACHE_NAME) {
-                                    console.log('Deleting old cache:', cacheName);
-                                    return caches.delete(cacheName);
-                                }
-                            })
-                        );
-                    })
-                );
-                return self.clients.claim();
-            });
-
-            self.addEventListener('fetch', event => {
-                event.respondWith(
-                    caches.match(event.request)
-                        .then(response => {
-                            if (response) {
-                                return response;
-                            }
-                            return fetch(event.request).catch(() => {
-                                if (event.request.mode === 'navigate') {
-                                    return caches.match('/');
-                                }
-                            });
-                        })
-                );
-            });
-
-            self.addEventListener('push', event => {
-                const data = event.data ? JSON.parse(event.data.text()) : {};
-                const title = 'SnitchPocket';
-                const options = {
-                    body: data.message || 'Крыс что-то замышляет...',
-                    icon: '/icon-192x192.png',
-                    badge: '/icon-96x96.png',
-                    vibrate: [100, 50, 100],
-                    data: { url: data.url || '/' }
-                };
-                event.waitUntil(self.registration.showNotification(title, options));
-            });
-
-            self.addEventListener('notificationclick', event => {
-                event.notification.close();
-                event.waitUntil(
-                    clients.openWindow(event.notification.data.url)
-                );
-            });
-        `;
-
-        // Create manifest.json dynamically
-        const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-        const manifestURL = URL.createObjectURL(manifestBlob);
-        document.querySelector('link[rel="manifest"]').href = manifestURL;
-
-        // Create service worker dynamically (for demo purposes)
-        // In production, serve sw.js from root directory
-    </script>
-</body>
-</html>
-
+           
